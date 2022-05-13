@@ -8,20 +8,42 @@ generator client {
 }
 
 model Link {
-    id          Int      @id @default(autoincrement())   // 4
-    createdAt   DateTime @default(now())  // 5
-    description String
-    url         String
-    postedBy    User?    @relation(name: "PostedBy", fields: [postedById], references: [id])
-    postedById  Int?
-    voters      User[]   @relation(name: "Votes")
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  description String
+  url         String
+  postedBy    Customer?    @relation(name: "foobar", fields: [postedById], references: [id])
+  postedById  Int?
+  voters      Customer[]   @relation(name: "Votes")
 }
 
-model User {
-    id        Int      @id @default(autoincrement())
-    name      String
-    email     String   @unique
-    password  String
-    links     Link[] @relation(name: "PostedBy")
-    votes    Link[] @relation(name: "Votes")
+model Item {
+    id          Int         @id @default(autoincrement())
+    cartItem    CartItem?    @relation("cartItemItem")
+    name        String
+}
+
+model CartItem {
+    id              Int             @id @default(autoincrement())
+    item            Item            @relation(name: "cartItemItem", fields: [itemId], references: [id])
+    itemId          Int
+    shoppingCart    ShoppingCart    @relation(name: "cartCartItems", fields: [shoppingCartId], references: [id])
+    shoppingCartId  Int
+}
+
+model ShoppingCart {
+    id          Int         @id @default(autoincrement())
+    customer    Customer?    @relation(name: "customerCart", fields: [customerId], references: [id])
+    customerId  Int
+    cartItems   CartItem[]  @relation(name: "cartCartItems")
+}
+
+model Customer {
+  id            Int    @id @default(autoincrement())
+  name          String
+  email         String @unique
+  password      String
+  shoppingCart  ShoppingCart? @relation(name: "customerCart")
+  links         Link[] @relation(name: "foobar")
+  votes         Link[] @relation(name: "Votes")
 }
