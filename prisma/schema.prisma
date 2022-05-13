@@ -7,16 +7,6 @@ generator client {
     provider = "prisma-client-js"
 }
 
-model Link {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  description String
-  url         String
-  postedBy    Customer?    @relation(name: "foobar", fields: [postedById], references: [id])
-  postedById  Int?
-  voters      Customer[]   @relation(name: "Votes")
-}
-
 model Item {
     id          Int         @id @default(autoincrement())
     cartItem    CartItem?    @relation("cartItemItem")
@@ -44,6 +34,4 @@ model Customer {
   email         String @unique
   password      String
   shoppingCart  ShoppingCart? @relation(name: "customerCart")
-  links         Link[] @relation(name: "foobar")
-  votes         Link[] @relation(name: "Votes")
 }
