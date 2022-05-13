@@ -88,7 +88,7 @@ export interface NexusGenFieldTypes {
     name: string; // String!
   }
   Query: { // field return type
-    Customer: NexusGenRootTypes['Customer']; // Customer!
+    customer: NexusGenRootTypes['Customer']; // Customer!
   }
   ShoppingCart: { // field return type
     cartItems: Array<NexusGenRootTypes['CartItem'] | null> | null; // [CartItem]
@@ -112,7 +112,7 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
   }
   Query: { // field return type name
-    Customer: 'Customer'
+    customer: 'Customer'
   }
   ShoppingCart: { // field return type name
     cartItems: 'CartItem'
@@ -122,7 +122,7 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Query: {
-    Customer: { // args
+    customer: { // args
       email: string; // String!
     }
   }

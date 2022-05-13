@@ -18,7 +18,7 @@ export const Customer = objectType({
 export const CustomerQuery = extendType({
     type: "Query",
     definition(t) {
-        t.nonNull.field('Customer', {
+        t.nonNull.field('customer', {
             type: "Customer",
             args: {
                 email: nonNull(stringArg())
