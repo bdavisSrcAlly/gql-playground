@@ -2,10 +2,16 @@
 ### Do not make changes to this file directly
 
 
+type CartItem {
+  id: Int!
+  item: Item!
+}
+
 type Customer {
   email: String!
   id: Int!
   name: String!
+  shoppingCart: ShoppingCart
 }
 
 """
@@ -19,10 +25,10 @@ type Item {
 }
 
 type Query {
-  ok: Boolean!
+  Customer(email: String!): Customer!
 }
 
 type ShoppingCart {
-  customer: Customer
+  cartItems: [CartItem]
   id: Int!
 }

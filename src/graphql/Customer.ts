@@ -1,4 +1,4 @@
-import {objectType} from 'nexus';
+import {extendType, nonNull, objectType, stringArg} from 'nexus';
 
 export const Customer = objectType({
     name: 'Customer',
@@ -6,5 +6,28 @@ export const Customer = objectType({
         t.nonNull.int('id');
         t.nonNull.string('name');
         t.nonNull.string('email');
+        t.field('shoppingCart', {
+            type: "ShoppingCart",
+            resolve(parent, args, context) {
+                return context.prisma.customer.findUnique({where: {id: parent.id}}).shoppingCart()
+            }
+        })
+    }
+});
+
+export const CustomerQuery = extendType({
+    type: "Query",
+    definition(t) {
+        t.nonNull.field('Customer', {
+            type: "Customer",
+            args: {
+                email: nonNull(stringArg())
+            },
+            async resolve(parent, args, context) {
+                const email = args.email || '';
+
+                return context.prisma.customer.findUnique({where: {email}});
+            }
+        })
     }
 });

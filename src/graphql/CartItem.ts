@@ -7,7 +7,7 @@ export const CartItem = objectType({
         t.nonNull.field('item', {
             type: 'Item',
             resolve(parent, args, context) {
-                context.prisma.item.findUnique({where: {id: parent.id}})
+                return context.prisma.cartItem.findUnique({where: {id: parent.id}}).item()
             }
         });
     }

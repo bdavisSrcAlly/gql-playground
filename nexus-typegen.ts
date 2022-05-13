@@ -44,6 +44,9 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  CartItem: { // root type
+    id: number; // Int!
+  }
   Customer: { // root type
     email: string; // String!
     id: number; // Int!
@@ -70,44 +73,59 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  CartItem: { // field return type
+    id: number; // Int!
+    item: NexusGenRootTypes['Item']; // Item!
+  }
   Customer: { // field return type
     email: string; // String!
     id: number; // Int!
     name: string; // String!
+    shoppingCart: NexusGenRootTypes['ShoppingCart'] | null; // ShoppingCart
   }
   Item: { // field return type
     id: number; // Int!
     name: string; // String!
   }
   Query: { // field return type
-    ok: boolean; // Boolean!
+    Customer: NexusGenRootTypes['Customer']; // Customer!
   }
   ShoppingCart: { // field return type
-    customer: NexusGenRootTypes['Customer'] | null; // Customer
+    cartItems: Array<NexusGenRootTypes['CartItem'] | null> | null; // [CartItem]
     id: number; // Int!
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  CartItem: { // field return type name
+    id: 'Int'
+    item: 'Item'
+  }
   Customer: { // field return type name
     email: 'String'
     id: 'Int'
     name: 'String'
+    shoppingCart: 'ShoppingCart'
   }
   Item: { // field return type name
     id: 'Int'
     name: 'String'
   }
   Query: { // field return type name
-    ok: 'Boolean'
+    Customer: 'Customer'
   }
   ShoppingCart: { // field return type name
-    customer: 'Customer'
+    cartItems: 'CartItem'
     id: 'Int'
   }
 }
 
 export interface NexusGenArgTypes {
+  Query: {
+    Customer: { // args
+      email: string; // String!
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {
