@@ -29,15 +29,9 @@ declare global {
 }
 
 export interface NexusGenInputs {
-  LinkOrderByInput: { // input type
-    createdAt?: NexusGenEnums['Sort'] | null; // Sort
-    description?: NexusGenEnums['Sort'] | null; // Sort
-    url?: NexusGenEnums['Sort'] | null; // Sort
-  }
 }
 
 export interface NexusGenEnums {
-  Sort: "asc" | "desc"
 }
 
 export interface NexusGenScalars {
@@ -50,31 +44,21 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  AuthPayload: { // root type
-    token: string; // String!
-    user: NexusGenRootTypes['User']; // User!
-  }
-  Feed: { // root type
-    count: number; // Int!
-    id?: string | null; // ID
-    links: NexusGenRootTypes['Link'][]; // [Link!]!
-  }
-  Link: { // root type
-    createdAt: NexusGenScalars['DateTime']; // DateTime!
-    description: string; // String!
+  CartItem: { // root type
     id: number; // Int!
-    url: string; // String!
   }
-  Mutation: {};
-  Query: {};
-  User: { // root type
+  Customer: { // root type
     email: string; // String!
     id: number; // Int!
     name: string; // String!
   }
-  Vote: { // root type
-    link: NexusGenRootTypes['Link']; // Link!
-    user: NexusGenRootTypes['User']; // User!
+  Item: { // root type
+    id: number; // Int!
+    name: string; // String!
+  }
+  Query: {};
+  ShoppingCart: { // root type
+    id: number; // Int!
   }
 }
 
@@ -86,113 +70,60 @@ export interface NexusGenUnions {
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
-  AuthPayload: { // field return type
-    token: string; // String!
-    user: NexusGenRootTypes['User']; // User!
-  }
-  Feed: { // field return type
-    count: number; // Int!
-    id: string | null; // ID
-    links: NexusGenRootTypes['Link'][]; // [Link!]!
-  }
-  Link: { // field return type
-    createdAt: NexusGenScalars['DateTime']; // DateTime!
-    description: string; // String!
+  CartItem: { // field return type
     id: number; // Int!
-    postedBy: NexusGenRootTypes['User'] | null; // User
-    url: string; // String!
-    voters: NexusGenRootTypes['User'][]; // [User!]!
+    item: NexusGenRootTypes['Item']; // Item!
   }
-  Mutation: { // field return type
-    login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
-    post: NexusGenRootTypes['Link']; // Link!
-    signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
-    vote: NexusGenRootTypes['Vote'] | null; // Vote
-  }
-  Query: { // field return type
-    feed: NexusGenRootTypes['Feed']; // Feed!
-  }
-  User: { // field return type
+  Customer: { // field return type
     email: string; // String!
     id: number; // Int!
-    links: NexusGenRootTypes['Link'][]; // [Link!]!
     name: string; // String!
-    votes: NexusGenRootTypes['Link'][]; // [Link!]!
+    shoppingCart: NexusGenRootTypes['ShoppingCart'] | null; // ShoppingCart
   }
-  Vote: { // field return type
-    link: NexusGenRootTypes['Link']; // Link!
-    user: NexusGenRootTypes['User']; // User!
+  Item: { // field return type
+    id: number; // Int!
+    name: string; // String!
+  }
+  Query: { // field return type
+    customer: NexusGenRootTypes['Customer']; // Customer!
+  }
+  ShoppingCart: { // field return type
+    cartItems: Array<NexusGenRootTypes['CartItem'] | null> | null; // [CartItem]
+    id: number; // Int!
   }
 }
 
 export interface NexusGenFieldTypeNames {
-  AuthPayload: { // field return type name
-    token: 'String'
-    user: 'User'
-  }
-  Feed: { // field return type name
-    count: 'Int'
-    id: 'ID'
-    links: 'Link'
-  }
-  Link: { // field return type name
-    createdAt: 'DateTime'
-    description: 'String'
+  CartItem: { // field return type name
     id: 'Int'
-    postedBy: 'User'
-    url: 'String'
-    voters: 'User'
+    item: 'Item'
   }
-  Mutation: { // field return type name
-    login: 'AuthPayload'
-    post: 'Link'
-    signup: 'AuthPayload'
-    vote: 'Vote'
-  }
-  Query: { // field return type name
-    feed: 'Feed'
-  }
-  User: { // field return type name
+  Customer: { // field return type name
     email: 'String'
     id: 'Int'
-    links: 'Link'
     name: 'String'
-    votes: 'Link'
+    shoppingCart: 'ShoppingCart'
   }
-  Vote: { // field return type name
-    link: 'Link'
-    user: 'User'
+  Item: { // field return type name
+    id: 'Int'
+    name: 'String'
+  }
+  Query: { // field return type name
+    customer: 'Customer'
+  }
+  ShoppingCart: { // field return type name
+    cartItems: 'CartItem'
+    id: 'Int'
   }
 }
 
 export interface NexusGenArgTypes {
-  Mutation: {
-    login: { // args
-      email: string; // String!
-      password: string; // String!
-    }
-    post: { // args
-      description: string; // String!
-      url: string; // String!
-    }
-    signup: { // args
-      email: string; // String!
-      name: string; // String!
-      password: string; // String!
-    }
-    vote: { // args
-      linkId: number; // Int!
-    }
-  }
   Query: {
-    feed: { // args
-      filter?: string | null; // String
-      orderBy?: NexusGenInputs['LinkOrderByInput'][] | null; // [LinkOrderByInput!]
-      skip?: number | null; // Int
-      take?: number | null; // Int
+    customer: { // args
+      email: string; // String!
     }
   }
 }
@@ -205,9 +136,9 @@ export interface NexusGenTypeInterfaces {
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = keyof NexusGenInputs;
+export type NexusGenInputNames = never;
 
-export type NexusGenEnumNames = keyof NexusGenEnums;
+export type NexusGenEnumNames = never;
 
 export type NexusGenInterfaceNames = never;
 
